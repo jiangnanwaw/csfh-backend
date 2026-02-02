@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: csfh-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      # PostgreSQL (使用 Render 提供的)
+      - key: PG_HOST
+        fromDatabase:
+          name: csfh-auth
+          property: host
+      - key: PG_PORT
+        fromDatabase:
+          name: csfh-auth
+          property: port
+      - key: PG_USER
+        fromDatabase:
+          name: csfh-auth
+          property: user
+      - key: PG_PASSWORD
+        fromDatabase:
+          name: csfh-auth
+          property: password
+      - key: PG_DATABASE
+        fromDatabase:
+          name: csfh-auth
+          property: database
+      # SQL Server
+      - key: SQLSERVER_HOST
+        value: csfhcdz.f3322.net
+      - key: SQLSERVER_PORT
+        value: 1433
+      - key: SQLSERVER_USER
+        value: csfh
+      - key: SQLSERVER_PASSWORD
+        value: fh123456
+      - key: SQLSERVER_DATABASE
+        value: chargingdata
+      - key: SQLSERVER_ENCRYPT
+        value: false
+      - key: SQLSERVER_TRUST_CERT
+        value: true
+
+databases:
+  - name: csfh-auth
+    databaseName: csfh_auth
+    user: csfh_user
